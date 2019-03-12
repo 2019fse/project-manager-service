@@ -28,10 +28,12 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectResponse getProject(Integer projectId) {
         Project project = projectRepository.findById(projectId).orElse(null);
-        User user = userRepository.findUserByProjectId(projectId);
         ProjectResponse projectResponse = modelMapper.map(project, ProjectResponse.class);
-        projectResponse.setManagerId(user.getId());
-        projectResponse.setManagerName(user.getFirstName() + user.getLastName());
+        User user = userRepository.findUserByProjectId(projectId);
+        if (user != null) {
+            projectResponse.setManagerId(user.getId());
+            projectResponse.setManagerName(user.getFirstName() + user.getLastName());
+        }
         return projectResponse;
     }
 
@@ -40,10 +42,12 @@ public class ProjectServiceImpl implements ProjectService {
         List<ProjectResponse> projectResponses = new ArrayList<>();
         List<Project> projects = projectRepository.findAll();
         projects.forEach(project -> {
-            User user = userRepository.findUserByProjectId(project.getProjectId());
             ProjectResponse projectResponse = modelMapper.map(project, ProjectResponse.class);
-            projectResponse.setManagerId(user.getId());
-            projectResponse.setManagerName(user.getFirstName() + user.getLastName());
+            User user = userRepository.findUserByProjectId(project.getProjectId());
+            if(user != null) {
+                projectResponse.setManagerId(user.getId());
+                projectResponse.setManagerName(user.getFirstName() + user.getLastName());
+            }
             projectResponses.add(projectResponse);
         });
         return projectResponses;
@@ -62,8 +66,10 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void deleteProject(Integer projectId) {
         User user = userRepository.findUserByProjectId(projectId);
-        user.setProjectId(null);
-        userRepository.save(user);
+        if(user != null) {
+            user.setProjectId(null);
+            userRepository.save(user);
+        }
         projectRepository.deleteById(projectId);
 
     }
@@ -73,10 +79,11 @@ public class ProjectServiceImpl implements ProjectService {
             user.setProjectId(null);
             userRepository.save(user);
         }
-
         Project project = projectRepository.save(modelMapper.map(projectRequest, Project.class));
-        User user = userRepository.findById(1).orElse(null);
-        user.setProjectId(project.getProjectId());
-        userRepository.save(user);
+        if(projectRequest.getManagerId() != null) {
+            User user = userRepository.findById(projectRequest.getManagerId()).orElse(null);
+            user.setProjectId(project.getProjectId());
+            userRepository.save(user);
+        }
     }
 }

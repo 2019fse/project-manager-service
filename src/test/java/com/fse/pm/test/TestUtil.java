@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fse.pm.project.dao.model.Project;
 import com.fse.pm.project.presentation.model.request.ProjectRequest;
 import com.fse.pm.project.presentation.model.response.ProjectResponse;
+import com.fse.pm.task.dao.model.ParentTask;
+import com.fse.pm.task.dao.model.Task;
 import com.fse.pm.user.dao.model.User;
 
 import java.time.LocalDate;
@@ -27,6 +29,7 @@ public class TestUtil {
         ProjectRequest projectRequest = new ProjectRequest();
         projectRequest.setProjectId(1);
         projectRequest.setProjectName("Test Project");
+        projectRequest.setManagerId(10);
         return projectRequest;
     }
     public static String asJsonString(final Object obj) {
@@ -49,5 +52,17 @@ public class TestUtil {
         project.setProjectId(1);
         project.setProjectName("Test project");
         return project;
+    }
+
+    public static ParentTask getTestParentTask() {
+        ParentTask parentTask = new ParentTask();
+        parentTask.setParentTask("Test Parent Task");
+        return parentTask;
+    }
+
+    public static Task getTestTask() {
+        Task task = new Task();
+        task.setTaskName("Test Task");
+        return task;
     }
 }

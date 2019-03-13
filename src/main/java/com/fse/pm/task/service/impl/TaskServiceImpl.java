@@ -8,6 +8,8 @@ import com.fse.pm.task.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TaskServiceImpl implements TaskService {
     private final ParentTaskRepository parentTaskRepository;
@@ -25,5 +27,15 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void createTask(Task task) {
         taskRepository.save(task);
+    }
+
+    @Override
+    public List<ParentTask> getAllParentTasks() {
+        return parentTaskRepository.findAll();
+    }
+
+    @Override
+    public List<Task> getAllTasks() {
+        return taskRepository.findAll();
     }
 }

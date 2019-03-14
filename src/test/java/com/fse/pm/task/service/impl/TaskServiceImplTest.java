@@ -82,4 +82,34 @@ public class TaskServiceImplTest {
         taskService.updateTask(TestUtil.getTestTask());
         verify(taskRepository, times(1)).save(any());
     }
+
+    @Test
+    public void updateTaskUserNull() {
+        when(taskRepository.save(any())).thenReturn(TestUtil.getTestTask());
+        when(userRepository.findById(anyInt())).thenReturn(Optional.of(TestUtil.getTestUser()));
+        when(userRepository.findUserByTaskId(anyInt())).thenReturn(null);
+        when(userRepository.save(any())).thenReturn(TestUtil.getTestUser());
+        taskService.updateTask(TestUtil.getTestTask());
+        verify(taskRepository, times(1)).save(any());
+    }
+    @Test
+    public void updateTaskNull() {
+        Task task = TestUtil.getTestTask();
+        task.setTaskId(null);
+        task.setUserId(null);
+        when(taskRepository.save(any())).thenReturn(TestUtil.getTestTask());
+        taskService.updateTask(TestUtil.getTestTask());
+        verify(taskRepository, times(1)).save(any());
+    }
+
+    @Test
+    public void getAllTasksNull() {
+        Task task = TestUtil.getTestTask();
+        task.setProjectId(null);
+        task.setParentId(null);
+        when(taskRepository.findTasksByProjectId(anyInt())).thenReturn(Arrays.asList(TestUtil.getTestTask()));
+        when(userRepository.findUserByTaskId(anyInt())).thenReturn(null);
+        List<TaskResponse> tasks = taskService.getAllTasksForProject(10);
+        assertEquals(1, tasks.size());
+    }
 }

@@ -2,6 +2,7 @@ package com.fse.pm.task.presentation.controller;
 
 import com.fse.pm.task.dao.model.ParentTask;
 import com.fse.pm.task.dao.model.Task;
+import com.fse.pm.task.presentation.model.response.TaskResponse;
 import com.fse.pm.task.service.TaskService;
 import com.fse.pm.test.TestUtil;
 import org.junit.Test;
@@ -17,10 +18,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 @RunWith(SpringRunner.class)
@@ -60,11 +61,20 @@ public class TaskControllerTest {
 
     @Test
     public void getAllTasks() throws Exception {
-        List<Task> tasks = Arrays.asList(TestUtil.getTestTask());
-        given(taskService.getAllTasks()).willReturn(tasks);
-        mvc.perform(get("/api/task")
+        List<TaskResponse> tasks = Arrays.asList(TestUtil.getTestTaskResponse());
+        given(taskService.getAllTasksForProject(anyInt())).willReturn(tasks);
+        mvc.perform(get("/api/task/project/10")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].taskName").value("Test Task"));
+    }
+
+    @Test
+    public void updateTask() throws Exception {
+        doNothing().when(taskService).createTask(any());
+        mvc.perform(put("/api/task")
+                .content(TestUtil.asJsonString(TestUtil.getTestTask()))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 }

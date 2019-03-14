@@ -5,6 +5,8 @@ import com.fse.pm.project.dao.repository.ProjectRepository;
 import com.fse.pm.project.presentation.model.request.ProjectRequest;
 import com.fse.pm.project.presentation.model.response.ProjectResponse;
 import com.fse.pm.project.service.ProjectService;
+import com.fse.pm.task.dao.model.Task;
+import com.fse.pm.task.dao.repository.TaskRepository;
 import com.fse.pm.user.dao.model.User;
 import com.fse.pm.user.dao.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -18,11 +20,14 @@ import java.util.List;
 public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
+    private final TaskRepository taskRepository;
     private final ModelMapper modelMapper;
+    private final static String COMPLETETD = "Completed";
     @Autowired
-    public ProjectServiceImpl(final ProjectRepository projectRepository, final UserRepository userRepository, final ModelMapper modelMapper){
+    public ProjectServiceImpl(final ProjectRepository projectRepository, final UserRepository userRepository, final TaskRepository taskRepository, final ModelMapper modelMapper){
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
+        this.taskRepository = taskRepository;
         this.modelMapper = modelMapper;
     }
     @Override
@@ -48,6 +53,11 @@ public class ProjectServiceImpl implements ProjectService {
                 projectResponse.setManagerId(user.getId());
                 projectResponse.setManagerName(user.getFirstName() + user.getLastName());
             }
+            List<Task> tasks = taskRepository.findTasksByProjectId(project.getProjectId());
+            long completed = tasks.stream().filter(t -> COMPLETETD.equals(t.getStatus())).count();
+            long total = tasks.size();
+            projectResponse.setTaskTotalCount(total);
+            projectResponse.setTaskCompletedCount(completed);
             projectResponses.add(projectResponse);
         });
         return projectResponses;

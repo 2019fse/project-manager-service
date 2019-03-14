@@ -11,4 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("SELECT u FROM User u WHERE u.projectId = ?1")
     User findUserByProjectId(Integer projectId);
+    @Query("SELECT u FROM User u WHERE u.taskId = ?1")
+    User findUserByTaskId(Integer taskId);
 }

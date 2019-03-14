@@ -6,6 +6,7 @@ import com.fse.pm.project.presentation.model.request.ProjectRequest;
 import com.fse.pm.project.presentation.model.response.ProjectResponse;
 import com.fse.pm.task.dao.model.ParentTask;
 import com.fse.pm.task.dao.model.Task;
+import com.fse.pm.task.presentation.model.response.TaskResponse;
 import com.fse.pm.user.dao.model.User;
 
 import java.time.LocalDate;
@@ -19,8 +20,8 @@ public class TestUtil {
         projectResponse.setManagerId(1);
         projectResponse.setEndDate(LocalDate.now());
         projectResponse.setStartDate(LocalDate.now());
-        projectResponse.setTaskCompletedCount(1);
-        projectResponse.setTaskTotalCount(1);
+        projectResponse.setTaskCompletedCount(1L);
+        projectResponse.setTaskTotalCount(1L);
         projectResponse.setPriority(10);
         return projectResponse;
     }
@@ -63,6 +64,20 @@ public class TestUtil {
     public static Task getTestTask() {
         Task task = new Task();
         task.setTaskName("Test Task");
+        task.setUserId(10);
+        task.setParentId(10);
+        task.setProjectId(10);
+        task.setTaskId(10);
+        return task;
+    }
+
+    public static TaskResponse getTestTaskResponse() {
+        TaskResponse task = new TaskResponse();
+        task.setTaskName("Test Task");
+        task.setUserId(10);
+        task.setParentId(10);
+        task.setPriority(0);
+        task.setProjectName("");
         return task;
     }
 }

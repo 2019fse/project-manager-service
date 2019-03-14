@@ -10,8 +10,8 @@ public class ProjectResponse {
     private Integer priority;
     private Integer managerId;
     private String managerName;
-    private Integer taskTotalCount = 0;
-    private Integer taskCompletedCount = 0;
+    private Long taskTotalCount = 0L;
+    private Long taskCompletedCount = 0L;
 
     public Integer getProjectId() {
         return projectId;
@@ -69,19 +69,19 @@ public class ProjectResponse {
         this.managerName = managerName;
     }
 
-    public Integer getTaskTotalCount() {
+    public Long getTaskTotalCount() {
         return taskTotalCount;
     }
 
-    public void setTaskTotalCount(Integer taskTotalCount) {
+    public void setTaskTotalCount(Long taskTotalCount) {
         this.taskTotalCount = taskTotalCount;
     }
 
-    public Integer getTaskCompletedCount() {
+    public Long getTaskCompletedCount() {
         return taskCompletedCount;
     }
 
-    public void setTaskCompletedCount(Integer taskCompletedCount) {
+    public void setTaskCompletedCount(Long taskCompletedCount) {
         this.taskCompletedCount = taskCompletedCount;
     }
 }

@@ -1,23 +1,36 @@
-package com.fse.pm.task.dao.model;
+package com.fse.pm.task.presentation.model.response;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity
-@Table(name="task")
-public class Task {
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+public class TaskResponse {
     private Integer taskId;
-    private Integer parentId;
-    private Integer projectId;
     private String taskName;
+    private Integer parentId;
+    private String parentTask;
+    private Integer projectId;
+    private String projectName;
+    private Integer priority;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Integer priority;
-    @Transient
     private Integer userId;
+    private String userName;
     private String status;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public Integer getPriority() {
         return priority;
@@ -25,6 +38,14 @@ public class Task {
 
     public void setPriority(Integer priority) {
         this.priority = priority;
+    }
+
+    public String getParentTask() {
+        return parentTask;
+    }
+
+    public void setParentTask(String parentTask) {
+        this.parentTask = parentTask;
     }
 
     public Integer getTaskId() {
@@ -49,6 +70,14 @@ public class Task {
 
     public void setProjectId(Integer projectId) {
         this.projectId = projectId;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
     public String getTaskName() {
@@ -81,13 +110,5 @@ public class Task {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
     }
 }

@@ -2,12 +2,10 @@ package com.fse.pm.task.presentation.controller;
 
 import com.fse.pm.task.dao.model.ParentTask;
 import com.fse.pm.task.dao.model.Task;
+import com.fse.pm.task.presentation.model.response.TaskResponse;
 import com.fse.pm.task.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,9 +32,13 @@ public class TaskController {
         return taskService.getAllParentTasks();
     }
 
-    @GetMapping("/api/task")
-    public List<Task> getAllTasks() {
-        return taskService.getAllTasks();
+    @GetMapping("/api/task/project/{projectId}")
+    public List<TaskResponse> getAllTasksForProject(@PathVariable Integer projectId) {
+        return taskService.getAllTasksForProject(projectId);
+    }
+    @PutMapping("/api/task")
+    public void updateTask(@RequestBody Task task) {
+        taskService.updateTask(task);
     }
 
 }

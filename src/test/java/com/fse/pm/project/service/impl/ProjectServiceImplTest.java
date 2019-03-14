@@ -4,6 +4,7 @@ import com.fse.pm.project.dao.model.Project;
 import com.fse.pm.project.dao.repository.ProjectRepository;
 import com.fse.pm.project.presentation.model.request.ProjectRequest;
 import com.fse.pm.project.presentation.model.response.ProjectResponse;
+import com.fse.pm.task.dao.repository.TaskRepository;
 import com.fse.pm.test.TestUtil;
 import com.fse.pm.user.dao.repository.UserRepository;
 import org.junit.Test;
@@ -28,6 +29,8 @@ public class ProjectServiceImplTest {
     private UserRepository userRepository;
     @Mock
     private ProjectRepository projectRepository;
+    @Mock
+    private TaskRepository taskRepository;
     @Spy
     private ModelMapper modelMapper;
     @InjectMocks
@@ -47,6 +50,7 @@ public class ProjectServiceImplTest {
         List<Project> expectedProjectList = Arrays.asList(TestUtil.getTestProject());
         when(projectRepository.findAll()).thenReturn(expectedProjectList);
         when(userRepository.findUserByProjectId(anyInt())).thenReturn(TestUtil.getTestUser());
+        when(taskRepository.findTasksByProjectId(anyInt())).thenReturn(Arrays.asList(TestUtil.getTestTask()));
         List<ProjectResponse> actualProjectResponseList = projectService.getAllProjects();
         assertEquals(actualProjectResponseList.get(0).getProjectId(), expectedProjectList.get(0).getProjectId());
     }

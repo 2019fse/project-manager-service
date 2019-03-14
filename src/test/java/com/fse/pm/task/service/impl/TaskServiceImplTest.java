@@ -97,7 +97,7 @@ public class TaskServiceImplTest {
         Task task = TestUtil.getTestTask();
         task.setTaskId(null);
         task.setUserId(null);
-        when(taskRepository.save(any())).thenReturn(TestUtil.getTestTask());
+        when(taskRepository.save(any())).thenReturn(task);
         taskService.updateTask(TestUtil.getTestTask());
         verify(taskRepository, times(1)).save(any());
     }
@@ -107,7 +107,7 @@ public class TaskServiceImplTest {
         Task task = TestUtil.getTestTask();
         task.setProjectId(null);
         task.setParentId(null);
-        when(taskRepository.findTasksByProjectId(anyInt())).thenReturn(Arrays.asList(TestUtil.getTestTask()));
+        when(taskRepository.findTasksByProjectId(anyInt())).thenReturn(Arrays.asList(task));
         when(userRepository.findUserByTaskId(anyInt())).thenReturn(null);
         List<TaskResponse> tasks = taskService.getAllTasksForProject(10);
         assertEquals(1, tasks.size());

@@ -98,7 +98,7 @@ public class TaskServiceImplTest {
         task.setTaskId(null);
         task.setUserId(null);
         when(taskRepository.save(any())).thenReturn(task);
-        taskService.updateTask(TestUtil.getTestTask());
+        taskService.updateTask(task);
         verify(taskRepository, times(1)).save(any());
     }
 

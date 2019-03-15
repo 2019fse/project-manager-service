@@ -12,4 +12,5 @@ public interface TaskService {
     void updateTask(Task task);
     List<ParentTask> getAllParentTasks();
     List<TaskResponse> getAllTasksForProject(Integer projectId);
+    void deleteTask(Integer taskId);
 }

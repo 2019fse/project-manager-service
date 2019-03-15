@@ -41,4 +41,9 @@ public class TaskController {
         taskService.updateTask(task);
     }
 
+    @DeleteMapping("/api/task/{taskId}")
+    public void deleteTask(@PathVariable Integer taskId){
+        taskService.deleteTask(taskId);
+    }
+
 }

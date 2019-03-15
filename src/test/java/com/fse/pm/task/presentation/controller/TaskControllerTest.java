@@ -77,4 +77,12 @@ public class TaskControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
+    @Test
+    public void deleteTask() throws Exception {
+        doNothing().when(taskService).deleteTask(anyInt());
+        mvc.perform(delete("/api/task/10")
+                .content(TestUtil.asJsonString(TestUtil.getTestUser()))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
 }

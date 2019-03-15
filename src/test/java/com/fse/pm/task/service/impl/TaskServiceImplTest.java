@@ -15,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +22,7 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+
 
 @RunWith(MockitoJUnitRunner.class)
 public class TaskServiceImplTest {
@@ -112,4 +112,11 @@ public class TaskServiceImplTest {
         List<TaskResponse> tasks = taskService.getAllTasksForProject(10);
         assertEquals(1, tasks.size());
     }
+    @Test
+    public void deleteTask() {
+        doNothing().when(taskRepository).deleteById(anyInt());
+        taskService.deleteTask(0);
+        verify(taskRepository, times(1)).deleteById(anyInt());
+    }
+
 }

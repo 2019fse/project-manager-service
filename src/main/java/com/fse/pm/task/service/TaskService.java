@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface TaskService {
     void createParentTask(ParentTask parentTask);
-    void createTask(Task task);
+    Task createTask(Task task);
     void updateTask(Task task);
     List<ParentTask> getAllParentTasks();
     List<TaskResponse> getAllTasksForProject(Integer projectId);

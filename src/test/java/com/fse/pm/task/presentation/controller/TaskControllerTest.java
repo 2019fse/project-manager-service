@@ -1,7 +1,6 @@
 package com.fse.pm.task.presentation.controller;
 
 import com.fse.pm.task.dao.model.ParentTask;
-import com.fse.pm.task.dao.model.Task;
 import com.fse.pm.task.presentation.model.response.TaskResponse;
 import com.fse.pm.task.service.TaskService;
 import com.fse.pm.test.TestUtil;
@@ -21,6 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -42,7 +42,7 @@ public class TaskControllerTest {
 
     @Test
     public void createTask() throws Exception {
-        doNothing().when(taskService).createTask(any());
+        when(taskService.createTask(any())).thenReturn(TestUtil.getTestTask());
         mvc.perform(post("/api/task")
                 .content(TestUtil.asJsonString(TestUtil.getTestTask()))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -71,7 +71,7 @@ public class TaskControllerTest {
 
     @Test
     public void updateTask() throws Exception {
-        doNothing().when(taskService).createTask(any());
+        when(taskService.createTask(any())).thenReturn(TestUtil.getTestTask());
         mvc.perform(put("/api/task")
                 .content(TestUtil.asJsonString(TestUtil.getTestTask()))
                 .contentType(MediaType.APPLICATION_JSON))

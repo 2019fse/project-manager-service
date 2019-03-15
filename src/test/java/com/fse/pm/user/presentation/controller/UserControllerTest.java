@@ -19,6 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -53,7 +54,7 @@ public class UserControllerTest {
 
     @Test
     public void createUser()  throws Exception {
-        doNothing().when(userService).createUser(any());
+        when(userService.createUser(any())).thenReturn(TestUtil.getTestUser());
         mvc.perform(post("/api/user")
                 .content(TestUtil.asJsonString(TestUtil.getTestUser()))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -62,7 +63,7 @@ public class UserControllerTest {
 
     @Test
     public void updateUser() throws Exception {
-        doNothing().when(userService).createUser(any());
+        when(userService.createUser(any())).thenReturn(TestUtil.getTestUser());
         mvc.perform(put("/api/user")
                 .content(TestUtil.asJsonString(TestUtil.getTestUser()))
                 .contentType(MediaType.APPLICATION_JSON))

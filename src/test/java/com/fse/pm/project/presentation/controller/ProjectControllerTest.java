@@ -1,6 +1,5 @@
 package com.fse.pm.project.presentation.controller;
 
-import com.fse.pm.project.presentation.model.request.ProjectRequest;
 import com.fse.pm.project.presentation.model.response.ProjectResponse;
 import com.fse.pm.project.service.ProjectService;
 import com.fse.pm.test.TestUtil;
@@ -20,6 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -54,7 +54,7 @@ public class ProjectControllerTest {
 
     @Test
     public void createProject() throws Exception {
-        doNothing().when(projectService).createProject(any());
+        when(projectService.createProject(any())).thenReturn(TestUtil.getTestProject());
         mvc.perform(post("/api/project")
                 .content(TestUtil.asJsonString(TestUtil.getTestProjectRequest()))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -63,7 +63,7 @@ public class ProjectControllerTest {
 
     @Test
     public void updateProject() throws Exception {
-        doNothing().when(projectService).createProject(any());
+        when(projectService.createProject(any())).thenReturn(TestUtil.getTestProject());
         mvc.perform(put("/api/project")
                 .content(TestUtil.asJsonString(TestUtil.getTestProjectRequest()))
                 .contentType(MediaType.APPLICATION_JSON))

@@ -64,8 +64,8 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void createProject(ProjectRequest projectRequest) {
-        saveProject(projectRequest);
+    public Project createProject(ProjectRequest projectRequest) {
+        return saveProject(projectRequest);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class ProjectServiceImpl implements ProjectService {
         projectRepository.deleteById(projectId);
 
     }
-    private void saveProject(ProjectRequest projectRequest) {
+    private Project saveProject(ProjectRequest projectRequest) {
         if(projectRequest.getProjectId() != null) {
             User user = userRepository.findUserByProjectId(projectRequest.getProjectId());
             user.setProjectId(null);
@@ -95,5 +95,6 @@ public class ProjectServiceImpl implements ProjectService {
             user.setProjectId(project.getProjectId());
             userRepository.save(user);
         }
+        return project;
     }
 }

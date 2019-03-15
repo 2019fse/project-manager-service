@@ -44,15 +44,15 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void createTask(Task task) {
-        saveTask(task);
+    public Task createTask(Task task) {
+        return saveTask(task);
     }
 
     @Override
     public void updateTask(Task task) {
         saveTask(task);
     }
-    private void saveTask(Task task) {
+    private Task saveTask(Task task) {
         if(task.getTaskId() != null) {
             User user = userRepository.findUserByTaskId(task.getTaskId());
             if(user != null) {
@@ -60,7 +60,7 @@ public class TaskServiceImpl implements TaskService {
                 userRepository.save(user);
             }
         }
-        taskRepository.save(task);
+        Task taskReturn = taskRepository.save(task);
         if(task.getUserId() != null) {
             Optional<User> user = userRepository.findById(task.getUserId());
             user.ifPresent(u -> {
@@ -68,6 +68,7 @@ public class TaskServiceImpl implements TaskService {
                 userRepository.save(u);
             });
         }
+        return taskReturn;
     }
 
     @Override

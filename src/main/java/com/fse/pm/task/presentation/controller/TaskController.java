@@ -23,8 +23,8 @@ public class TaskController {
     }
 
     @PostMapping("/api/task")
-    public void createTask(@RequestBody Task task) {
-        taskService.createTask(task);
+    public Task createTask(@RequestBody Task task) {
+        return taskService.createTask(task);
     }
 
     @GetMapping("/api/parenttask")

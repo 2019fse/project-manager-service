@@ -1,5 +1,6 @@
 package com.fse.pm.project.presentation.controller;
 
+import com.fse.pm.project.dao.model.Project;
 import com.fse.pm.project.presentation.model.request.ProjectRequest;
 import com.fse.pm.project.presentation.model.response.ProjectResponse;
 import com.fse.pm.project.service.ProjectService;
@@ -26,8 +27,8 @@ public class ProjectController {
         return projectService.getProject(projectId);
     }
     @PostMapping
-    public void createProject(@RequestBody ProjectRequest projectRequest) {
-        projectService.createProject(projectRequest);
+    public Project createProject(@RequestBody ProjectRequest projectRequest) {
+        return projectService.createProject(projectRequest);
     }
 
     @PutMapping
